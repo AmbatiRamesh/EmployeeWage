@@ -1,35 +1,42 @@
 package com.bridgelabz;
 public class EmployeeWageComputation {
-    public static void main(String args[]) {
-        final int PART_TIME = 1;
-        final int FULL_TIME = 2;
-        final int WAGE_PER_HR = 20;
-        final int MAX_WORKING_DAYS = 20;
-        final int MAX_WORKING_HRS = 100;
-        int totalWage = 0;
-        int workingHrs = 0;
-        System.out.printf("%5s     %5s     %5s     %5s\n", "Day", "Workinghrs", "Wage", "Total working hrs");
-        for (int day = 1, totalWorkingHrs = 0; day <= MAX_WORKING_DAYS
-                && totalWorkingHrs < MAX_WORKING_HRS; day++, totalWorkingHrs += workingHrs) {
-            int empType = (int) (Math.random() * 100) % 3;
-            switch (empType) {
+    static final int FULL_DAY_HOUR = 8;
+    static final int PART_TIME_HOUR = 4;
+    static final int FULL_TIME = 1;
+    static final int PART_TIME = 2;
+    static void computeEmpWage(int workingDayPerMonth,int totalWorkingHours,int wagePerHour){
+        int empwage = 0, workingday = 1, totalempwage = 0, workinhHrs=0;//local variable computeEmpWage Block
+        while (workingday <= workingDayPerMonth && workinhHrs<=totalWorkingHours) {
+            double empcheck = (int) Math.floor(Math.random() * 10) % 3;
+            switch ((int) empcheck) {
                 case FULL_TIME:
-                    workingHrs = 8;
+                    System.out.println("Employee is Present");
+                    empwage = wagePerHour * FULL_DAY_HOUR;
+                    System.out.println("working days: " + workingday);
+                    System.out.println("EmpWage: " + empwage);
+                    totalempwage = empwage + totalempwage;
+                    workinhHrs = workinhHrs + FULL_DAY_HOUR;
                     break;
                 case PART_TIME:
-                    workingHrs = 4;
+                    System.out.println("Employee is Part-time");
+                    empwage = wagePerHour * PART_TIME_HOUR;
+                    System.out.println("working days: " + workingday);
+                    System.out.println("EmpWage: " + empwage);
+                    totalempwage = empwage + totalempwage;
+                    workinhHrs = workinhHrs + PART_TIME_HOUR;
                     break;
                 default:
-                    workingHrs = 0;
+                    System.out.println("Employee is Absent");
+                    System.out.println("working days: " + workingday);
+                    System.out.println("EmpWage: " + empwage);
                     break;
             }
-            int wage = workingHrs * WAGE_PER_HR;
-            totalWage += wage;
-            System.out.printf("%5d       %5d      %5d      %5d\n", day, workingHrs, wage, totalWorkingHrs + workingHrs);
-
+            workingday++;
         }
-        System.out.println("Total wage for a month is " + totalWage);
+        System.out.println("--------------");
+        System.out.println("Total Working Hrs:>" + workinhHrs + "\n-------------- \nTotal Wage:>" + totalempwage);
+    }
+    public static void main(String[] args) {
+        computeEmpWage(26,150,15);
     }
 }
-
-
