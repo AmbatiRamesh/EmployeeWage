@@ -27,7 +27,6 @@ public class EmployeeWageComputation implements IComputeEmpWage{
         for (int i = 0; i < numOfCompany; i++) {
             CompanyEmpWage companyEmpWage = companyEmpWageArray.get(i);
             companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
-
             System.out.println(companyEmpWage);
         }
     }
@@ -58,7 +57,8 @@ public class EmployeeWageComputation implements IComputeEmpWage{
         for (int i = 0; i < numOfCompany; i++) {
             System.out.println("Total salary for " + companyEmpWageArray.get(i).getCompany() + ": $"
                     + companyEmpWageArray.get(i).getTotalEmpWage());
-
+            System.out.println("Daily Wages for " + companyEmpWageArray.get(i).getCompany() + " : $"
+                    + companyEmpWageArray.get(i).getDailyWages());
         }
     }
 public static void main(String[] args) {
