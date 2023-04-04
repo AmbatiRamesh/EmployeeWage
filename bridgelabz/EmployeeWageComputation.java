@@ -5,7 +5,6 @@ public class EmployeeWageComputation implements EmployeeWageBuilder {
     public static final int PART_TIME = 1;          // class constant
     public static final int FULL_TIME = 2;
     private LinkedList<CompanyEmpWage> companyEmpWageList;                        // instance variables
-    //private CompanyEmpWage[] companyArray;
     public EmployeeWageComputation(int n) {                  //Constructor of same class
         companyEmpWageList = new LinkedList<>();
     }
@@ -17,6 +16,7 @@ public class EmployeeWageComputation implements EmployeeWageBuilder {
         for (int i = 0; i < companyEmpWageList.size(); i++) {
             CompanyEmpWage companyEmpWage = companyEmpWageList.get(i);
             companyEmpWage.setTotalEmployeeWage(this.computeEmpWage(companyEmpWage));
+            companyEmpWage.storeDailyWage();
             System.out.println(companyEmpWage);
         }
     }
@@ -24,6 +24,7 @@ public class EmployeeWageComputation implements EmployeeWageBuilder {
         int empHrs;                                                      // Local variables
         int totalWorkingDays = 0;
         int totalEmpHrs = 0;
+        companyEmpWage.dailyWage = new  int[companyEmpWage.MAX_WORKING_DAYS];
         System.out.println("Calculating Wage for Company: " + companyEmpWage.COMPANY_NAME);
         while (totalEmpHrs <= companyEmpWage.MAX_WORKING_HRS && totalWorkingDays < companyEmpWage.MAX_WORKING_DAYS) {
             totalWorkingDays++;
@@ -41,24 +42,23 @@ public class EmployeeWageComputation implements EmployeeWageBuilder {
                     break;
             }
             totalEmpHrs += empHrs;
-            System.out.println("Day: " + totalWorkingDays + "\tEmp Hr: " + empHrs);
+            companyEmpWage.dailyWage[totalWorkingDays-1] = empHrs * companyEmpWage.WAGE_PER_HR;
+            System.out.println("Day: " + totalWorkingDays + "\tEmployee Hour: " + empHrs);
         }
         return totalEmpHrs * companyEmpWage.WAGE_PER_HR;
     }
-        public static void main(String[] args) {
-            System.out.println("Welcome to Employee Wage Computation");
-            System.out.println("************************************");
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter the number of companies: ");
-            int number = scanner.nextInt();
-            EmployeeWageBuilder empWageBuilder = new EmployeeWageComputation(number);                 //Object creation
-            for (int i = 0; i < number; i++) {
-                System.out.println("Enter Company Details as given:\n1. CompanyName\t2. EmployeeRatePerHour\t3. NoOfWorkingDays\n4. MaxHoursPerMonth");
-                empWageBuilder.addCompany(scanner.next(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
-            }
-            empWageBuilder.computeEmpWage();                 // Method calling
+    public static void main(String[] args)  {
+        System.out.println("Welcome to Employee Wage Computation");
+        System.out.println("************************************");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of companies: ");
+        int number = scanner.nextInt();
+        EmployeeWageBuilder empWageBuilder = new EmployeeWageComputation(number);                 //Object creation
+        for (int i = 0; i < number; i++) {
+            System.out.println("Enter Company Details as given:\n1. CompanyName\t2. EmployeeRatePerHour\t3. NoOfWorkingDays\n4. MaxHoursPerMonth");
+            empWageBuilder.addCompany(scanner.next(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
         }
+        empWageBuilder.computeEmpWage();                 // Method calling
     }
-
-
+}
 
