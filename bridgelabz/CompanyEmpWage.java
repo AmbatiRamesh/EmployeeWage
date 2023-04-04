@@ -5,8 +5,7 @@ public class CompanyEmpWage {
     public final int WAGE_PER_HR;
     public final int MAX_WORKING_DAYS;
     public final int MAX_WORKING_HRS;
-    // instance variable
-    public int totalEmpWage;
+    public int totalEmpWage;                      // instance variable
     /*Constructor of same class*/
     public CompanyEmpWage(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs) {
         this.COMPANY_NAME = companyName;
@@ -28,5 +27,3 @@ public class CompanyEmpWage {
         return "The total employee wage of " + COMPANY_NAME + " is " + totalEmpWage + "\n";
     }
 }
-
-

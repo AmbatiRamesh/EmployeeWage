@@ -1,26 +1,34 @@
 package com.bridgelabz;
-public class EmployeeWageComputation {
+import java.util.LinkedList;
+import java.util.Scanner;
+public class EmployeeWageComputation implements EmployeeWageBuilder {
     public static final int PART_TIME = 1;          // class constant
     public static final int FULL_TIME = 2;
-    int companies = 0;                        // instance variables
-    private CompanyEmpWage[] companyArray;
-    public EmployeeWageComputation() {                  //Constructor of same class
-        companyArray = new CompanyEmpWage[5];
+    private LinkedList<CompanyEmpWage> companyEmpWageList;                        // instance variables
+
+    //private CompanyEmpWage[] companyArray;
+    public EmployeeWageComputation(int n) {                  //Constructor of same class
+        companyEmpWageList = new LinkedList<>();
     }
-    private void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
-        companyArray[companies] = new CompanyEmpWage(companyName, wagePerHour, maxWorkingDays, maxWorkingHours);
-        companies++;
+
+    public void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
+        CompanyEmpWage companyEmpWage = new CompanyEmpWage(companyName, wagePerHour, maxWorkingDays, maxWorkingHours);
+        companyEmpWageList.add(companyEmpWage);
     }
-    private void computeEmpWage() {
-        for (int i = 0; i < companies; i++) {
-            companyArray[i].setTotalEmployeeWage(this.computeEmpWage(companyArray[i]));
-            System.out.println(companyArray[i]);
+
+    public void computeEmpWage() {
+        for (int i = 0; i < companyEmpWageList.size(); i++) {
+            CompanyEmpWage companyEmpWage = companyEmpWageList.get(i);
+            companyEmpWage.setTotalEmployeeWage(this.computeEmpWage(companyEmpWage));
+            System.out.println(companyEmpWage);
         }
     }
+
     public int computeEmpWage(CompanyEmpWage companyEmpWage) {           // Compute Wage method
-        int empHrs;                                               // Local variables
+        int empHrs;                                                      // Local variables
         int totalWorkingDays = 0;
         int totalEmpHrs = 0;
+        System.out.println("Calculating Wage for Company: " + companyEmpWage.COMPANY_NAME);
         while (totalEmpHrs <= companyEmpWage.MAX_WORKING_HRS && totalWorkingDays < companyEmpWage.MAX_WORKING_DAYS) {
             totalWorkingDays++;
             int empCheck = (int) Math.floor(Math.random() * 10) % 3;
@@ -35,19 +43,25 @@ public class EmployeeWageComputation {
                 default:
                     empHrs = 0;
                     break;
-            }// End Case
+            }
             totalEmpHrs += empHrs;
             System.out.println("Day: " + totalWorkingDays + "\tEmp Hr: " + empHrs);
         }
         return totalEmpHrs * companyEmpWage.WAGE_PER_HR;
     }
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         System.out.println("Welcome to Employee Wage Computation");
         System.out.println("************************************");
-        EmployeeWageComputation empWageBuilder = new EmployeeWageComputation();                 //Object creation
-        empWageBuilder.addCompany("Flipkart", 20, 20, 15);
-        empWageBuilder.addCompany("Reliance", 15, 25, 20);
-        empWageBuilder.addCompany("Tata", 17, 22, 18);
-        empWageBuilder.computeEmpWage();         // Method calling
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of companies: ");
+        int number = scanner.nextInt();
+        EmployeeWageBuilder empWageBuilder = new EmployeeWageComputation(number);                 //Object creation
+        for (int i = 0; i < number; i++) {
+            System.out.println("Enter Company Details as given:\n1. CompanyName\t2. EmployeeRatePerHour\t3. NoOfWorkingDays\n4. MaxHoursPerMonth");
+            empWageBuilder.addCompany(scanner.next(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+        }
+        empWageBuilder.computeEmpWage();                 // Method calling
     }
 }
+
+
