@@ -1,4 +1,8 @@
 package com.bridgelabz;
+
+import java.util.ArrayList;
+import java.util.List;
+
 interface IComputeEmpWage {
     public void addCompanyEmpWage(String company, int wagePerHour, int totalWorkingDays, int maxWorkingHour);
 
@@ -9,21 +13,24 @@ interface IComputeEmpWage {
 public class EmployeeWageComputation implements IComputeEmpWage{
   public static final int IS_PART_TIME = 1;
   public static final int IS_FULL_TIME = 2;
-  private int numOfCompany = 0;
-  private CompanyEmpWage[] companyEmpWageArray;
-   public EmployeeWageComputation() {
-        companyEmpWageArray = new CompanyEmpWage[5];
-   }
-   public void addCompanyEmpWage(String company, int emp_rate_per_hour, int num_of_working_days,
-        int max_hours_in_month) {
-        companyEmpWageArray[numOfCompany] = new CompanyEmpWage(company, emp_rate_per_hour, num_of_working_days, max_hours_in_month);
+    private int numOfCompany = 0;
+    private List<CompanyEmpWage> companyEmpWageArray;
+
+    public EmployeeWageComputation() {
+        companyEmpWageArray = new ArrayList<>();
+    }
+    public void addCompanyEmpWage(String company, int emp_rate_per_hour, int num_of_working_days, int max_hours_in_month) {
+        companyEmpWageArray.add(new CompanyEmpWage(company, emp_rate_per_hour, num_of_working_days, max_hours_in_month));
         numOfCompany++;
-   }
-   public void computeEmpWage() {
+    }
+    public void computeEmpWage() {
         for (int i = 0; i < numOfCompany; i++) {
-        companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(companyEmpWageArray[i]));
+            CompanyEmpWage companyEmpWage = companyEmpWageArray.get(i);
+            companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
+
+            System.out.println(companyEmpWage);
         }
-   }
+    }
     public int computeEmpWage(CompanyEmpWage companyEmpWage) {
         int empHrs = 0;
         int totalEmpHrs = 0;
@@ -49,8 +56,9 @@ public class EmployeeWageComputation implements IComputeEmpWage{
    }
     public void printTotalWage() {
         for (int i = 0; i < numOfCompany; i++) {
-            System.out.println("Total salary for " + companyEmpWageArray[i].getCompany() + ": $"
-                    + companyEmpWageArray[i].getTotalEmpWage());
+            System.out.println("Total salary for " + companyEmpWageArray.get(i).getCompany() + ": $"
+                    + companyEmpWageArray.get(i).getTotalEmpWage());
+
         }
     }
 public static void main(String[] args) {
