@@ -1,46 +1,58 @@
 package com.bridgelabz;
 public class EmployeeWageComputation {
-    static final int FULL_DAY_HOUR = 8;
-    static final int PART_TIME_HOUR = 4;
-    static final int FULL_TIME = 1;
-    static final int PART_TIME = 2;
-    static void computeEmpWage(String CompanyName,int workingDayPerMonth,int totalWorkingHours,int wagePerHour) {
-        int empwage = 0, workingday = 1, totalempwage = 0, workinhHrs = 0;//local variable computeEmpWage Block
-        while (workingday <= workingDayPerMonth && workinhHrs <= totalWorkingHours) {
-            double empcheck = (int) Math.floor(Math.random() * 10) % 3;
-            switch ((int) empcheck) {
-                case FULL_TIME:
-                    System.out.println(CompanyName+"-------");
-                    System.out.println("Employee is Present");
-                    empwage = wagePerHour * FULL_DAY_HOUR;
-                    System.out.println("working days: " + workingday);
-                    System.out.println("EmpWage: " + empwage);
-                    totalempwage = empwage + totalempwage;
-                    workinhHrs = workinhHrs + FULL_DAY_HOUR;
+    public static final int IS_ABSENT= 0;
+    public static final int IS_PRESENT = 1;
+    public static final int IS_PART_TIME = 2;
+    public static final int FULL_TIME_WORKING_HRS = 8;
+    public static final int PART_TIME_WORKING_HRS = 4;
+
+    private final  String companyName;
+    private final int totalWorkingHrsInMonth;
+    private final int workingDaysInMonth;
+    private final int empWagePerHour;
+    private int totalMonthlyWageOfEmp;
+    public EmployeeWageComputation(String companyName, int totalWorkingHrsInMonth, int workingDaysInMonth, int empWagePerHour) {
+        this.companyName = companyName;
+        this.totalWorkingHrsInMonth = totalWorkingHrsInMonth;
+        this.workingDaysInMonth = workingDaysInMonth;
+        this.empWagePerHour = empWagePerHour;
+    }
+    public void empWageComputation() {
+        int totalEmpWagePerDay = 0, totalNoOfHrsWorked = 0, totalNoOfDaysWorked = 0;
+        while (totalNoOfDaysWorked <= workingDaysInMonth && totalNoOfHrsWorked <= totalWorkingHrsInMonth) {
+            double empCheck = Math.floor(Math.random() * 10) % 3;
+            int empSwitchCheck = (int) empCheck;
+            switch (empSwitchCheck) {
+                case IS_PRESENT:
+                    totalNoOfHrsWorked = totalNoOfHrsWorked + FULL_TIME_WORKING_HRS;
+                    totalNoOfDaysWorked = totalNoOfDaysWorked + 1;
+                    totalEmpWagePerDay = FULL_TIME_WORKING_HRS * empWagePerHour;
+                    totalMonthlyWageOfEmp = totalMonthlyWageOfEmp + totalEmpWagePerDay;
                     break;
-                case PART_TIME:
-                    System.out.println(CompanyName+"-------");
-                    System.out.println("Employee is Part-time");
-                    empwage = wagePerHour * PART_TIME_HOUR;
-                    System.out.println("working days: " + workingday);
-                    System.out.println("EmpWage: " + empwage);
-                    totalempwage = empwage + totalempwage;
-                    workinhHrs = workinhHrs + PART_TIME_HOUR;
+                case IS_PART_TIME:
+                    totalNoOfHrsWorked = totalNoOfHrsWorked + PART_TIME_WORKING_HRS;
+                    totalNoOfDaysWorked = totalNoOfDaysWorked + 1;
+                    totalEmpWagePerDay = PART_TIME_WORKING_HRS * empWagePerHour;
+                    totalMonthlyWageOfEmp = totalMonthlyWageOfEmp + totalEmpWagePerDay;
                     break;
                 default:
-                    System.out.println(CompanyName+"-----");
-                    System.out.println("Employee is Absent");
-                    System.out.println("working days: " + workingday);
-                    System.out.println("EmpWage: " + empwage);
-                    break;
+                    totalNoOfDaysWorked = totalNoOfDaysWorked + 1;
             }
-            workingday++;
         }
-        System.out.println("--------------");
-        System.out.println("\nCompany Name :"+CompanyName+ "\nTotal Working Hrs:>" + workinhHrs + "\n-------------- \nTotal Wage:>" + totalempwage);
+    }
+    @Override
+    public String toString() {
+        return "EmpWageComputation [companyName=" + companyName + ", totalEmpWage=" + totalMonthlyWageOfEmp + "]";
     }
     public static void main(String[] args) {
-        computeEmpWage("Reliance",26,150,15);
-        computeEmpWage("TATA",20,100,25);
+        EmployeeWageComputation jio = new EmployeeWageComputation("jio",100,25,20);
+        EmployeeWageComputation mart = new EmployeeWageComputation("dmart",80,25,20);
+        EmployeeWageComputation bigC = new EmployeeWageComputation("bigC",90,25,20);
+        jio.empWageComputation();
+        mart.empWageComputation();
+        bigC.empWageComputation();
+        System.out.println(jio);
+        System.out.println(mart);
+        System.out.println(bigC);
     }
 }
