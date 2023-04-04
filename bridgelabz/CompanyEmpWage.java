@@ -15,7 +15,6 @@ public class CompanyEmpWage {
         this.MAX_WORKING_HRS = maxWorkingHrs;
         this.totalEmpWage = 0;
     }
-
     public void setTotalEmployeeWage(int totalEmpWage) {
         this.totalEmpWage = totalEmpWage;
     }

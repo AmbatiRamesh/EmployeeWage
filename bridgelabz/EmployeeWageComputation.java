@@ -41,7 +41,7 @@ public class EmployeeWageComputation {
         }
         return totalEmpHrs * companyEmpWage.WAGE_PER_HR;
     }
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation");
         System.out.println("************************************");
         EmployeeWageComputation empWageBuilder = new EmployeeWageComputation();                 //Object creation
@@ -51,4 +51,3 @@ public class EmployeeWageComputation {
         empWageBuilder.computeEmpWage();         // Method calling
     }
 }
-
