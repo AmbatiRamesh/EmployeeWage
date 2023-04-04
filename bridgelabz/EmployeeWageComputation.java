@@ -5,17 +5,14 @@ public class EmployeeWageComputation implements EmployeeWageBuilder {
     public static final int PART_TIME = 1;          // class constant
     public static final int FULL_TIME = 2;
     private LinkedList<CompanyEmpWage> companyEmpWageList;                        // instance variables
-
     //private CompanyEmpWage[] companyArray;
     public EmployeeWageComputation(int n) {                  //Constructor of same class
         companyEmpWageList = new LinkedList<>();
     }
-
     public void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
         CompanyEmpWage companyEmpWage = new CompanyEmpWage(companyName, wagePerHour, maxWorkingDays, maxWorkingHours);
         companyEmpWageList.add(companyEmpWage);
     }
-
     public void computeEmpWage() {
         for (int i = 0; i < companyEmpWageList.size(); i++) {
             CompanyEmpWage companyEmpWage = companyEmpWageList.get(i);
@@ -23,7 +20,6 @@ public class EmployeeWageComputation implements EmployeeWageBuilder {
             System.out.println(companyEmpWage);
         }
     }
-
     public int computeEmpWage(CompanyEmpWage companyEmpWage) {           // Compute Wage method
         int empHrs;                                                      // Local variables
         int totalWorkingDays = 0;
@@ -49,19 +45,20 @@ public class EmployeeWageComputation implements EmployeeWageBuilder {
         }
         return totalEmpHrs * companyEmpWage.WAGE_PER_HR;
     }
-    public static void main(String[] args)  {
-        System.out.println("Welcome to Employee Wage Computation");
-        System.out.println("************************************");
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the number of companies: ");
-        int number = scanner.nextInt();
-        EmployeeWageBuilder empWageBuilder = new EmployeeWageComputation(number);                 //Object creation
-        for (int i = 0; i < number; i++) {
-            System.out.println("Enter Company Details as given:\n1. CompanyName\t2. EmployeeRatePerHour\t3. NoOfWorkingDays\n4. MaxHoursPerMonth");
-            empWageBuilder.addCompany(scanner.next(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+        public static void main(String[] args) {
+            System.out.println("Welcome to Employee Wage Computation");
+            System.out.println("************************************");
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter the number of companies: ");
+            int number = scanner.nextInt();
+            EmployeeWageBuilder empWageBuilder = new EmployeeWageComputation(number);                 //Object creation
+            for (int i = 0; i < number; i++) {
+                System.out.println("Enter Company Details as given:\n1. CompanyName\t2. EmployeeRatePerHour\t3. NoOfWorkingDays\n4. MaxHoursPerMonth");
+                empWageBuilder.addCompany(scanner.next(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+            }
+            empWageBuilder.computeEmpWage();                 // Method calling
         }
-        empWageBuilder.computeEmpWage();                 // Method calling
     }
-}
+
 
 
