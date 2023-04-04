@@ -1,37 +1,28 @@
 package com.bridgelabz;
 
 public class CompanyEmpWage {
-    public final String COMPANY_NAME;
-    public final int WAGE_PER_HR;
-    public final int MAX_WORKING_DAYS;
-    public final int MAX_WORKING_HRS;
-    public int totalEmpWage;                      // instance variable
-    public int []dailyWage;
-    public int totalDailyWage;
-    /*Constructor of same class*/
-    public CompanyEmpWage(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs) {
-        this.COMPANY_NAME = companyName;
-        this.WAGE_PER_HR = wagePerHr;
-        this.MAX_WORKING_DAYS = maxWorkingDays;
-        this.MAX_WORKING_HRS = maxWorkingHrs;
-        this.totalEmpWage = 0;
+
+    public final String company;
+    public final int emp_rate_per_hour;
+    public final int num_of_working_days;
+    public final int max_hours_in_month;
+    public int totalEmpWage;
+
+    public CompanyEmpWage(String company, int emp_rate_per_hour, int num_of_working_days, int max_hours_in_month) {
+
+        this.company = company;
+        this.emp_rate_per_hour = emp_rate_per_hour;
+        this.num_of_working_days = num_of_working_days;
+        this.max_hours_in_month = max_hours_in_month;
     }
-    public void setTotalEmployeeWage(int totalEmpWage) {
+
+    public void setTotalEmpWage(int totalEmpWage) {
         this.totalEmpWage = totalEmpWage;
     }
-    public void storeDailyWage(){
-        for (int i = 0; i < dailyWage.length; i++){
-            System.out.println("Day " + (i+1) + "\tDaily Wage : " + dailyWage[i]);
-            totalDailyWage += dailyWage[i];
-        }
-    }
+
     @Override
     public String toString() {
-        System.out.println("Details of " + COMPANY_NAME + " employee");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("Wage per hour:" + WAGE_PER_HR);
-        System.out.println("Maximum working days:" + MAX_WORKING_DAYS);
-        System.out.println("Maximum working hours:" + MAX_WORKING_HRS);
-        return "The total employee wage of company " + COMPANY_NAME + " is " + totalEmpWage + "\n";
+        return "Total Emp Wage for Company: " + company + " is: " + totalEmpWage;
     }
+
 }
